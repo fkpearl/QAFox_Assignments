@@ -31,7 +31,9 @@ public class RaceCar {
 		int p = 2;
 		int i = 1;
 		String name = null, title = null, ship = null, price = null;
+		System.out.println("Scrapping page : 1");
 		do {
+			
 
 			try {
 				WebElement sort = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Newest']")));
@@ -44,14 +46,14 @@ public class RaceCar {
 
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-			Thread.sleep(3000);
+//			Thread.sleep(3000);
 
 			List<WebElement> products = wait.until(ExpectedConditions
 					.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='product-list']/ul/li/div/span/a")));
 			int num = products.size();
 //			System.out.println(num);
 
-			for (int j = 1; j <= Math.min(num, 60); j++) {
+			for (int j = 1; j <= Math.min(num, 2); j++) {
 
 
 				try {
@@ -105,7 +107,7 @@ public class RaceCar {
 						if (showMore.isDisplayed()) { // Check if the element is displayed
 							System.out.println("found it");
 							showMore.click(); // Click if it exists
-							Thread.sleep(1000); // Wait for the content to load
+//							Thread.sleep(1000); // Wait for the content to load
 						}
 
 					} while (driver.findElement(By.xpath("(//div[text()='SHOW MORE'])[last()]")).isDisplayed());
@@ -148,10 +150,13 @@ public class RaceCar {
 
 			WebElement check = wait
 					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='num']/span")));
-			System.out.println(check.getText());
+			if(p!=9)
+			System.out.println("Scrapping page : "+ p);
+			
 			p++;
+			
 
-		} while (p <= pages);
+		} while (p <= pages+1);
 
 		driver.quit();
 	}
